@@ -90,7 +90,7 @@ class BLOGUS_CTRL_View extends OW_ActionController
             $this->assign('username', $userService->getUserName($author->getId()));
             $this->assign('displayname', $displayName);
 
-            $url = OW::getRouter()->urlForRoute('user-blog', array('user' => $username));
+            $url = OW::getRouter()->urlForRoute('blogus.user-blog', array('user' => $username));
 
             $pending_approval_text = '';
             if ($post->getStatus() == BLOGUS_BOL_PostService::POST_STATUS_APPROVAL)
@@ -142,9 +142,9 @@ class BLOGUS_CTRL_View extends OW_ActionController
 
             $this->assign('adjasentUrl',
                 array(
-                    'next' => (!empty($nextUser) ) ? OW::getRouter()->urlForRoute('user-post', array('id' => $next->getId(), 'user' => $nextUser->getUsername())) : '',
-                    'prev' => (!empty($prevUser) ) ? OW::getRouter()->urlForRoute('user-post', array('id' => $prev->getId(), 'user' => $prevUser->getUsername())) : '',
-                    'index' => OW::getRouter()->urlForRoute('user-blog', array('user' => $author->getUsername()))
+                    'next' => (!empty($nextUser) ) ? OW::getRouter()->urlForRoute('blogus.user-post', array('id' => $next->getId(), 'user' => $nextUser->getUsername())) : '',
+                    'prev' => (!empty($prevUser) ) ? OW::getRouter()->urlForRoute('blogus.user-post', array('id' => $prev->getId(), 'user' => $prevUser->getUsername())) : '',
+                    'index' => OW::getRouter()->urlForRoute('blogus.user-blog', array('user' => $author->getUsername()))
                 )
             );
         }
@@ -243,7 +243,7 @@ class BLOGUS_CTRL_View extends OW_ActionController
         $this->assign('isModerator', OW::getUser()->isAuthorized('blogs'));
         if ( $isAuthorExists )
         {
-            $this->assign('userBlogUrl', OW::getRouter()->urlForRoute('user-blog', array('user' => $author->getUsername())));
+            $this->assign('userBlogUrl', OW::getRouter()->urlForRoute('blogus.user-blog', array('user' => $author->getUsername())));
         }
 
         $rateInfo = new BASE_CMP_Rate('blogs', 'blog-post', $post->getId(), $post->getAuthorId());

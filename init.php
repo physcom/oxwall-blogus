@@ -14,9 +14,9 @@ OW::getRouter()->addRoute(new OW_Route('blogus.post-approve', 'blogus/post/appro
 
 // OW::getRouter()->addRoute(new OW_Route('post-part', 'blogus/post/:id/:part', "BLOGS_CTRL_View", 'index'));
 
-// OW::getRouter()->addRoute(new OW_Route('user-blog', 'blogus/user/:user', "BLOGS_CTRL_UserBlog", 'index'));
+OW::getRouter()->addRoute(new OW_Route('blogus.user-blog', 'blogus/user/:user', "BLOGUS_CTRL_UserBlog", 'index'));
 
-// OW::getRouter()->addRoute(new OW_Route('user-post', 'blogus/:id', "BLOGS_CTRL_View", 'index'));
+OW::getRouter()->addRoute(new OW_Route('blogus.user-post', 'blogus/:id', "BLOGUS_CTRL_View", 'index'));
 
 OW::getRouter()->addRoute(new OW_Route('blogus', 'blogus', "BLOGUS_CTRL_Blog", 'index', array('list' => array(OW_Route::PARAM_OPTION_HIDDEN_VAR => 'latest'))));
 OW::getRouter()->addRoute(new OW_Route('blogus.list', 'blogus/list/:list', "BLOGUS_CTRL_Blog", 'index'));

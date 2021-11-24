@@ -117,7 +117,7 @@ class BLOGUS_CTRL_Save extends OW_ActionController
                     'postId' => $id
                 )));
                 $service->delete($dto);
-                OW::getEventManager()->trigger(new OW_Event(PostService::EVENT_AFTER_DELETE, array(
+                OW::getEventManager()->trigger(new OW_Event(BLOGUS_BOL_PostService::EVENT_AFTER_DELETE, array(
                     'postId' => $id
                 )));
             }
