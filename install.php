@@ -40,7 +40,7 @@ CREATE TABLE `{$dbPrefix}blogus_post` (
   `id` INTEGER(11) NOT NULL AUTO_INCREMENT,
   `authorId` INTEGER(11) NOT NULL,
   `title` VARCHAR(512) COLLATE utf8_general_ci NOT NULL DEFAULT '',
-  `phone_number` VARCHAR(50) COLLATE utf8_general_ci NOT NULL DEFAULT '',
+  `phoneNumber` VARCHAR(50) COLLATE utf8_general_ci NOT NULL DEFAULT '',
   `post` TEXT COLLATE utf8_general_ci NOT NULL,
   `timestamp` INTEGER(11) NOT NULL,
   `isDraft` TINYINT(1) NOT NULL,

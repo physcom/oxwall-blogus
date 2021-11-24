@@ -279,7 +279,7 @@ class BLOGUS_BOL_PostDao extends OW_BaseDao
 			SELECT YEAR( FROM_UNIXTIME(`timestamp`) ) as `y`, MONTH( FROM_UNIXTIME(`timestamp`) ) as `m`
 			FROM `{$this->getTableName()}`
 			WHERE isDraft = 0 AND `authorId` = ?
-			GROUP BY `y` DESC, `m` DESC
+			GROUP BY `y`, `m`
 		";
 
         return $this->dbo->queryForList($query, array($id));

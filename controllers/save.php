@@ -6,6 +6,8 @@ class BLOGUS_CTRL_Save extends OW_ActionController
 
     public function index( $params = array() )
     {
+
+        
         if (OW::getRequest()->isAjax())
         {
             exit();
@@ -16,7 +18,7 @@ class BLOGUS_CTRL_Save extends OW_ActionController
             throw new AuthenticateException();
         }
         
-
+          
 
         $this->setPageHeading(OW::getLanguage()->text('blogs', 'save_page_heading'));
         $this->setPageHeadingIconClass('ow_ic_write');
@@ -28,14 +30,14 @@ class BLOGUS_CTRL_Save extends OW_ActionController
 
             return;
         }
-
+        
         $this->assign('authMsg', null);
 
         $id = empty($params['id']) ? 0 : $params['id'];
-
+          
         $service = BLOGUS_BOL_PostService::getInstance(); /* @var $service BLOGUS_BOL_PostService */
 
-
+        
         if ( intval($id) > 0 )
         {
             $post = $service->findById($id);
@@ -80,7 +82,7 @@ class BLOGUS_CTRL_Save extends OW_ActionController
         if ( OW::getRequest()->isPost() && (!empty($_POST['command']) && in_array($_POST['command'], array('draft', 'publish')) ) && $form->isValid($_POST) )
         {
             $form->process($this);
-            OW::getApplication()->redirect(OW::getRouter()->urlForRoute('post-save-edit', array('id' => $post->getId())));
+            OW::getApplication()->redirect(OW::getRouter()->urlForRoute('blogus.save.edit', array('id' => $post->getId())));
         }
 
         $this->addForm($form);
@@ -162,7 +164,7 @@ class SaveForm extends Form
 
         $this->addElement($titleTextField->setLabel(OW::getLanguage()->text('blogs', 'save_form_lbl_title'))->setValue($post->getTitle())->setRequired(true));
 
-        $this->addElement($phoneNumberField->setLabel(OW::getLanguage()->text('blogs', 'save_form_lbl_title'))->setValue($post->getPhoneNumber())->setRequired(true));
+        $this->addElement($phoneNumberField->setLabel(OW::getLanguage()->text('blogs', 'save_form_lbl_phone'))->setValue($post->getPhoneNumber())->setRequired(true));
 
         $buttons = array(
             BOL_TextFormatService::WS_BTN_BOLD,
@@ -243,6 +245,9 @@ class SaveForm extends Form
         $data = $this->getValues();
 
         $data['title'] = UTIL_HtmlTag::stripJs($data['title']);
+
+        $data['phoneNumber'] = UTIL_HtmlTag::sanitize($data['phoneNumber']);
+
 
         $postIsNotPublished = $this->post->getStatus() == 2;
 
@@ -343,7 +348,7 @@ class SaveForm extends Form
                 BOL_AuthorizationService::getInstance()->trackActionForUser($blog_post->authorId, 'blogs', 'add_blog');
             }
 
-            $ctrl->redirect(OW::getRouter()->urlForRoute('post', array('id' => $this->post->getId())));
+            $ctrl->redirect(OW::getRouter()->urlForRoute('blogus.post', array('id' => $this->post->getId())));
         }
     }
 }

@@ -10,9 +10,6 @@ class BLOGUS_CTRL_View extends OW_ActionController
 
         $id = $params['id'];
 
-        $plugin = OW::getPluginManager()->getPlugin('blogs');
-
-        OW::getNavigation()->activateMenuItem(OW_Navigation::MAIN, 'blogs', 'main_menu_item');
 
         $service = BLOGUS_BOL_PostService::getInstance();
 
@@ -176,7 +173,7 @@ class BLOGUS_CTRL_View extends OW_ActionController
         {
             $tb[] = array(
                 'label' => OW::getLanguage()->text('base', 'approve'),
-                'href' => OW::getRouter()->urlForRoute('post-approve', array('id'=>$post->getId())),
+                'href' => OW::getRouter()->urlForRoute('blogus.post-approve', array('id'=>$post->getId())),
                 'id' => 'blog_post_toolbar_approve',
                 'class'=>'ow_mild_green'
             );
@@ -202,12 +199,12 @@ class BLOGUS_CTRL_View extends OW_ActionController
         if ( OW::getUser()->isAuthenticated() && ( OW::getUser()->getId() == $post->getAuthorId() || OW::getUser()->isAuthorized('blogs') ) )
         {
             $tb[] = array(
-                'href' => OW::getRouter()->urlForRoute('post-save-edit', array('id' => $post->getId())),
+                'href' => OW::getRouter()->urlForRoute('blogus.save.edit', array('id' => $post->getId())),
                 'label' => OW::getLanguage()->text('blogs', 'toolbar_edit')
             );
 
             $tb[] = array(
-                'href' => OW::getRouter()->urlFor('BLOGS_CTRL_Save', 'delete', array('id' => $post->getId())),
+                'href' => OW::getRouter()->urlFor('BLOGUS_CTRL_Save', 'delete', array('id' => $post->getId())),
                 'click' => "return confirm('" . OW::getLanguage()->text('base', 'are_you_sure') . "');",
                 'label' => OW::getLanguage()->text('blogs', 'toolbar_delete')
             );
@@ -293,7 +290,7 @@ class BLOGUS_CTRL_View extends OW_ActionController
 
         $this->assign('avatarUrl', '');
 
-        $tagCloud = new BASE_CMP_EntityTagCloud('blog-post', OW::getRouter()->urlForRoute('blogs.list', array('list'=>'browse-by-tag')));
+        $tagCloud = new BASE_CMP_EntityTagCloud('blog-post', OW::getRouter()->urlForRoute('blogus.list', array('list'=>'browse-by-tag')));
 
         $tagCloud->setEntityId($post->getId());
 
@@ -332,7 +329,7 @@ class BLOGUS_CTRL_View extends OW_ActionController
             throw new Redirect404Exception();
         }
 
-        $backUrl = OW::getRouter()->urlForRoute('post', array('id'=>$postId));
+        $backUrl = OW::getRouter()->urlForRoute('blogus.post', array('id'=>$postId));
 
         $event = new OW_Event("moderation.approve", array(
             "entityType" => PostService::FEED_ENTITY_TYPE,
